@@ -204,27 +204,27 @@ export default class PortionCalculator extends React.Component {
                         </Text>
                     </View>
                 </View>
-                <View style={{ height: 400, justifyContent: 'space-evenly' }}>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
-                        <CalculatorButton Number={1} style={{ flex: 1 }} onPressed={this.calculatorButtonPressed} />
-                        <CalculatorButton Number={2} style={{ flex: 1 }} onPressed={this.calculatorButtonPressed} />
-                        <CalculatorButton Number={3} style={{ flex: 1 }} onPressed={this.calculatorButtonPressed} />
+                <View style={{ height: 400, borderColor: 'blue', borderWidth:1 }}>
+                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                        <CalculatorButton Number={1} onPressed={this.calculatorButtonPressed} />
+                        <CalculatorButton Number={2} onPressed={this.calculatorButtonPressed} />
+                        <CalculatorButton Number={3} onPressed={this.calculatorButtonPressed} />
                     </View>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
+                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
 
-                        <CalculatorButton Number={4} style={{ flex: 1 }} onPressed={this.calculatorButtonPressed} />
-                        <CalculatorButton Number={5} style={{ flex: 1 }} onPressed={this.calculatorButtonPressed} />
-                        <CalculatorButton Number={6} style={{ flex: 1 }} onPressed={this.calculatorButtonPressed} />
+                        <CalculatorButton Number={4} onPressed={this.calculatorButtonPressed} />
+                        <CalculatorButton Number={5} onPressed={this.calculatorButtonPressed} />
+                        <CalculatorButton Number={6} onPressed={this.calculatorButtonPressed} />
                     </View>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
-                        <CalculatorButton Number={7} style={{ flex: 1 }} onPressed={this.calculatorButtonPressed} />
-                        <CalculatorButton Number={8} style={{ flex: 1 }} onPressed={this.calculatorButtonPressed} />
-                        <CalculatorButton Number={9} style={{ flex: 1 }} onPressed={this.calculatorButtonPressed} />
+                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                        <CalculatorButton Number={7} onPressed={this.calculatorButtonPressed} />
+                        <CalculatorButton Number={8} onPressed={this.calculatorButtonPressed} />
+                        <CalculatorButton Number={9} onPressed={this.calculatorButtonPressed} />
                     </View>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
-                        <CalculatorButton Number={'00'} style={{ flex: 1 }} onPressed={this.calculatorButtonPressed} />
-                        <CalculatorButton Number={0} style={{ flex: 1 }} onPressed={this.calculatorButtonPressed} />
-                        <CalculatorButton Number={'<'} style={{ flex: 1 }} onPressed={this.calculatorButtonPressed} />
+                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                        <CalculatorButton Number={'00'} onPressed={this.calculatorButtonPressed} />
+                        <CalculatorButton Number={0} onPressed={this.calculatorButtonPressed} />
+                        <CalculatorButton Number={'<'} onPressed={this.calculatorButtonPressed} />
                     </View>
                 </View>
             </View>

@@ -9,8 +9,8 @@ const style = StyleSheet.create({
         borderStyle: 'solid',
         borderWidth: 1,
         borderColor: 'red',
-        paddingVertical: 20,
-        paddingHorizontal: 30
+        height: 100,
+        width: 100
     }
 });
 
