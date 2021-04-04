@@ -5,11 +5,12 @@ import CalculatorButton from './CalculatorButton'
 const styles = StyleSheet.create({
     pawtionInputs: {
         flex: 1,
-        fontSize: 10,
+        fontSize: 15,
         textAlign: 'right',
     },
     pawtionLabels: {
         flex: 1,
+        fontSize: 15,
         textAlign: 'left'
     },
     pawtionUnits: {
@@ -123,7 +124,7 @@ export default class PortionCalculator extends React.Component {
     }
 
     _rememberMe() {
-        this.setState({modalVisible:true})
+        this.setState({ modalVisible: true })
         const portionCost = parseFloat(this.calculatePortionCost())
         const currentValue = {
             bag: this.state.bag,
@@ -144,7 +145,7 @@ export default class PortionCalculator extends React.Component {
     render() {
         const modalVisible = this.state.showModal;
         return (
-            <View>
+            <View style={{ borderColor: 'red', borderWidth: 1, height: '100%', fontSize: 20 }} >
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -153,19 +154,22 @@ export default class PortionCalculator extends React.Component {
                         Alert.alert("Modal has been closed.");
                     }}
                 ></Modal>
-                <View>
-                    <Text>Price/Portion</Text>
-                    {this.canCalculatePortionCost() &&
-                        <Text style={{ fontSize: 20 }}>{this.calculatePortionCost()}</Text>}
-                    {!this.canCalculatePortionCost() &&
-                        <Text style={{ fontSize: 15, paddingTop: 5 }}>Add bag/price/portion</Text>}
+                <View style={{ height: 80 }}>
+                    <Text style={{ textAlign: 'center' }}>Price/Portion</Text>
+                    <Text style={{ fontSize: 30, textAlign: 'center', paddingTop: 5 }}>
+                        {this.canCalculatePortionCost() &&
+                            this.calculatePortionCost()}
+                        {!this.canCalculatePortionCost() &&
+                             'Add bag/price/portion'
+                             }
+                    </Text>
                 </View>
                 <View>
                     <Button onPress={this.rememberMe}
                         disabled={!this.canCalculatePortionCost()}
                         title="Remember Me" />
                 </View>
-                <View >
+                <View>
                     <View style={[styles.pawtionInputRows, this.state.isEditing === "bag" && styles.pawtionActiveInput]}
                         onTouchEnd={() => this.onChangeEditing("bag")}>
                         <Text style={[styles.pawtionLabels]}>Bag Weight</Text>
@@ -200,7 +204,7 @@ export default class PortionCalculator extends React.Component {
                         </Text>
                     </View>
                 </View>
-                <View style={{ justifyContent: 'space-evenly' }}>
+                <View style={{ height: 400, justifyContent: 'space-evenly' }}>
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
                         <CalculatorButton Number={1} style={{ flex: 1 }} onPressed={this.calculatorButtonPressed} />
                         <CalculatorButton Number={2} style={{ flex: 1 }} onPressed={this.calculatorButtonPressed} />
