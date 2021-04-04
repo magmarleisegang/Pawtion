@@ -9,8 +9,8 @@ const style = StyleSheet.create({
         // borderStyle: 'solid',
          borderWidth: 1,
         borderColor: '#DDD',
-        height: 100,
-        width: 100
+        height: '100%',
+        
     },
     dark:{
        // backgroundColor: '#DDDDDD'
@@ -33,7 +33,7 @@ export default class CalculatorButton extends React.Component {
     render() {
         return (
             <View onTouchEnd={this.handleTouch}>
-                <Text style={[style.buttons, this.props.dark && style.dark]}>{this.props.Number}</Text>
+                <Text style={[style.buttons, this.props.dark && style.dark, {width: this.props.width}]}>{this.props.Number}</Text>
             </View>);
     }
 

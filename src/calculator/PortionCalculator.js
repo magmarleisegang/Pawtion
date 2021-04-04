@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Button, View, StyleSheet, Modal, Alert } from 'react-native';
+import { Text, Button, View, StyleSheet, Modal, Alert, Dimensions } from 'react-native';
 import CalculatorButton from './CalculatorButton'
 
 const styles = StyleSheet.create({
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     pawtionInputRows: {
         flexDirection: 'row',
         paddingHorizontal: 10,
-        height: 60,
+        height: 50,
     },
     pawtionActiveInput: {
         // textWeight: '500',
@@ -111,7 +111,9 @@ export default class PortionCalculator extends React.Component {
     }
 
     setCurrentEditingValue(val) {
+        
         let newFloatValue = parseFloat(val) / 100;
+        if(isNaN(newFloatValue)){newFloatValue = 0.00;}
         const isEditing = this.state.isEditing;
         switch (isEditing) {
             case "bag":
@@ -150,8 +152,15 @@ export default class PortionCalculator extends React.Component {
     render() {
         const modalVisible = this.state.showModal;
         const isEditing = this.state.isEditing;
+        const screenHeight = Dimensions.get("window").height - 50;
+        const buttonWidth = Dimensions.get("window").width / 3;
+        const headerHeight = 50;
+        const resultHeight = 80;
+        const inputsHeight = 3 * 50;
+        const calculatorHeight = screenHeight - resultHeight - inputsHeight- headerHeight;
+        const buttonHeight = calculatorHeight / 4;
         return (
-            <View style={{height: '100%', fontSize: 20 }} >
+            <View style={{ height: '100%', fontSize: 20 }} >
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -175,7 +184,7 @@ export default class PortionCalculator extends React.Component {
                         disabled={!this.canCalculatePortionCost()}
                         title="Remember Me" />
                 </View>
-                <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                     <View style={[styles.pawtionInputRows, isEditing === "bag" && styles.pawtionActiveInput]}
                         onTouchEnd={() => this.onChangeEditing("bag")}>
                         <Text style={[styles.pawtionInputs, styles.left]}>Bag Weight</Text>
@@ -207,27 +216,27 @@ export default class PortionCalculator extends React.Component {
                         </Text>
                     </View>
                 </View>
-                <View style={{ height: 400 }}>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                        <CalculatorButton Number={1} onPressed={this.calculatorButtonPressed} dark />
-                        <CalculatorButton Number={2} onPressed={this.calculatorButtonPressed} />
-                        <CalculatorButton Number={3} onPressed={this.calculatorButtonPressed} dark />
+                <View style={{ height: calculatorHeight }}>
+                    <View style={{ height: buttonHeight, flexDirection: 'row', alignItems: 'center' }}>
+                        <CalculatorButton Number={1} onPressed={this.calculatorButtonPressed} dark width={buttonWidth} />
+                        <CalculatorButton Number={2} onPressed={this.calculatorButtonPressed} width={buttonWidth} />
+                        <CalculatorButton Number={3} onPressed={this.calculatorButtonPressed} dark width={buttonWidth} />
                     </View>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{ height: buttonHeight, flexDirection: 'row', alignItems: 'center' }}>
 
-                        <CalculatorButton Number={4} onPressed={this.calculatorButtonPressed} />
-                        <CalculatorButton Number={5} onPressed={this.calculatorButtonPressed} dark />
-                        <CalculatorButton Number={6} onPressed={this.calculatorButtonPressed} />
+                        <CalculatorButton Number={4} onPressed={this.calculatorButtonPressed} width={buttonWidth} />
+                        <CalculatorButton Number={5} onPressed={this.calculatorButtonPressed} dark width={buttonWidth} />
+                        <CalculatorButton Number={6} onPressed={this.calculatorButtonPressed} width={buttonWidth} />
                     </View>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                        <CalculatorButton Number={7} onPressed={this.calculatorButtonPressed} dark />
-                        <CalculatorButton Number={8} onPressed={this.calculatorButtonPressed} />
-                        <CalculatorButton Number={9} onPressed={this.calculatorButtonPressed} dark />
+                    <View style={{ height: buttonHeight, flexDirection: 'row', alignItems: 'center' }}>
+                        <CalculatorButton Number={7} onPressed={this.calculatorButtonPressed} dark width={buttonWidth} />
+                        <CalculatorButton Number={8} onPressed={this.calculatorButtonPressed} width={buttonWidth} />
+                        <CalculatorButton Number={9} onPressed={this.calculatorButtonPressed} dark width={buttonWidth} />
                     </View>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                        <CalculatorButton Number={'00'} onPressed={this.calculatorButtonPressed} />
-                        <CalculatorButton Number={0} onPressed={this.calculatorButtonPressed} dark />
-                        <CalculatorButton Number={'<'} onPressed={this.calculatorButtonPressed} />
+                    <View style={{ height: buttonHeight, flexDirection: 'row', alignItems: 'center' }}>
+                        <CalculatorButton Number={'00'} onPressed={this.calculatorButtonPressed} width={buttonWidth} />
+                        <CalculatorButton Number={0} onPressed={this.calculatorButtonPressed} dark width={buttonWidth} />
+                        <CalculatorButton Number={'<'} onPressed={this.calculatorButtonPressed} width={buttonWidth} />
                     </View>
                 </View>
             </View>
