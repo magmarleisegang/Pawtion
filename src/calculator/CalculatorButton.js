@@ -5,7 +5,12 @@ const style = StyleSheet.create({
     buttons: {
         textAlign: 'center',
         textAlignVertical: 'center',
-        fontSize: 10
+        fontSize: 35,
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderColor: 'red',
+        paddingVertical: 20,
+        paddingHorizontal: 30
     }
 });
 
