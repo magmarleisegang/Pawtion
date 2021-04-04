@@ -5,27 +5,32 @@ import CalculatorButton from './CalculatorButton'
 const styles = StyleSheet.create({
     pawtionInputs: {
         flex: 1,
-        fontSize: 15,
+        fontSize: 20,
+        textAlignVertical: 'center',
+        textAlign: 'center'
+    },
+    right: {
         textAlign: 'right',
     },
-    pawtionLabels: {
-        flex: 1,
-        fontSize: 15,
-        textAlign: 'left'
+    left: {
+        textAlign: 'left',
     },
+
     pawtionUnits: {
         flex: 0.25,
-        textAlign: 'right'
+        fontSize: 17,
     },
     pawtionInputRows: {
         flexDirection: 'row',
-        padding: 5
+        paddingHorizontal: 10,
+        height: 60,
     },
     pawtionActiveInput: {
         // textWeight: '500',
-        backgroundColor: 'lightgreen'
+        backgroundColor: '#28519077'
     },
-    buttons: {
+    white: {
+        color: '#FFF',
 
     }
 })
@@ -144,8 +149,9 @@ export default class PortionCalculator extends React.Component {
 
     render() {
         const modalVisible = this.state.showModal;
+        const isEditing = this.state.isEditing;
         return (
-            <View style={{ borderColor: 'red', borderWidth: 1, height: '100%', fontSize: 20 }} >
+            <View style={{height: '100%', fontSize: 20 }} >
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -160,8 +166,8 @@ export default class PortionCalculator extends React.Component {
                         {this.canCalculatePortionCost() &&
                             this.calculatePortionCost()}
                         {!this.canCalculatePortionCost() &&
-                             'Add bag/price/portion'
-                             }
+                            'Add bag/price/portion'
+                        }
                     </Text>
                 </View>
                 <View>
@@ -169,61 +175,58 @@ export default class PortionCalculator extends React.Component {
                         disabled={!this.canCalculatePortionCost()}
                         title="Remember Me" />
                 </View>
-                <View>
-                    <View style={[styles.pawtionInputRows, this.state.isEditing === "bag" && styles.pawtionActiveInput]}
+                <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                    <View style={[styles.pawtionInputRows, isEditing === "bag" && styles.pawtionActiveInput]}
                         onTouchEnd={() => this.onChangeEditing("bag")}>
-                        <Text style={[styles.pawtionLabels]}>Bag Weight</Text>
-                        <Text style={[styles.pawtionUnits]}>kg</Text>
-
+                        <Text style={[styles.pawtionInputs, styles.left]}>Bag Weight</Text>
+                        <Text style={[styles.pawtionInputs, styles.pawtionUnits]}>kg</Text>
                         <Text
-                            style={[styles.pawtionInputs]}
+                            style={[styles.pawtionInputs, styles.right]}
                             placeholder="00.0">
                             {this.state.bag.toFixed(2)}
                         </Text>
                     </View>
                     <View style={[styles.pawtionInputRows, this.state.isEditing === "price" && styles.pawtionActiveInput]}
                         onTouchEnd={() => this.onChangeEditing("price")}>
-
-                        <Text style={[styles.pawtionLabels]}>Bag Price</Text>
-                        <Text style={[styles.pawtionUnits]}>R</Text>
+                        <Text style={[styles.pawtionInputs, styles.left]}>Bag Price</Text>
+                        <Text style={[styles.pawtionInputs, styles.pawtionUnits]}>R</Text>
                         <Text
-                            style={[styles.pawtionInputs]}
+                            style={[styles.pawtionInputs, styles.right]}
                             placeholder="00.0">
                             {this.state.price.toFixed(2)}
                         </Text>
                     </View>
                     <View style={[styles.pawtionInputRows, this.state.isEditing === "portion" && styles.pawtionActiveInput]}
                         onTouchEnd={() => this.onChangeEditing("portion")}>
-                        <Text style={[styles.pawtionLabels]}>Portion Size</Text>
-                        <Text style={[styles.pawtionUnits]}>g</Text>
-
+                        <Text style={[styles.pawtionInputs, styles.left]}>Portion Size</Text>
+                        <Text style={[styles.pawtionInputs, styles.pawtionUnits]}>g</Text>
                         <Text
-                            style={[styles.pawtionInputs]}
+                            style={[styles.pawtionInputs, styles.right]}
                             placeholder="00.0">
                             {this.state.portionSize.toFixed(2)}
                         </Text>
                     </View>
                 </View>
-                <View style={{ height: 400, borderColor: 'blue', borderWidth:1 }}>
+                <View style={{ height: 400 }}>
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                        <CalculatorButton Number={1} onPressed={this.calculatorButtonPressed} />
+                        <CalculatorButton Number={1} onPressed={this.calculatorButtonPressed} dark />
                         <CalculatorButton Number={2} onPressed={this.calculatorButtonPressed} />
-                        <CalculatorButton Number={3} onPressed={this.calculatorButtonPressed} />
+                        <CalculatorButton Number={3} onPressed={this.calculatorButtonPressed} dark />
                     </View>
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
 
                         <CalculatorButton Number={4} onPressed={this.calculatorButtonPressed} />
-                        <CalculatorButton Number={5} onPressed={this.calculatorButtonPressed} />
+                        <CalculatorButton Number={5} onPressed={this.calculatorButtonPressed} dark />
                         <CalculatorButton Number={6} onPressed={this.calculatorButtonPressed} />
                     </View>
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                        <CalculatorButton Number={7} onPressed={this.calculatorButtonPressed} />
+                        <CalculatorButton Number={7} onPressed={this.calculatorButtonPressed} dark />
                         <CalculatorButton Number={8} onPressed={this.calculatorButtonPressed} />
-                        <CalculatorButton Number={9} onPressed={this.calculatorButtonPressed} />
+                        <CalculatorButton Number={9} onPressed={this.calculatorButtonPressed} dark />
                     </View>
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                         <CalculatorButton Number={'00'} onPressed={this.calculatorButtonPressed} />
-                        <CalculatorButton Number={0} onPressed={this.calculatorButtonPressed} />
+                        <CalculatorButton Number={0} onPressed={this.calculatorButtonPressed} dark />
                         <CalculatorButton Number={'<'} onPressed={this.calculatorButtonPressed} />
                     </View>
                 </View>
