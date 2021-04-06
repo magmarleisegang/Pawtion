@@ -1,43 +1,14 @@
 import React from 'react';
 import { Text, Button, View, StyleSheet, Modal, Alert, Dimensions } from 'react-native';
-import CalculatorButton from './CalculatorButton'
+import NumPad from './NumPad'
+import PawtionInputs from './PawtionInputs';
+import pawtionInputs from './PawtionInputs'
 
-const styles = StyleSheet.create({
-    pawtionInputs: {
-        flex: 1,
-        fontSize: 20,
-        textAlignVertical: 'center',
-        textAlign: 'center'
-    },
-    right: {
-        textAlign: 'right',
-    },
-    left: {
-        textAlign: 'left',
-    },
-
-    pawtionUnits: {
-        flex: 0.25,
-        fontSize: 17,
-    },
-    pawtionInputRows: {
-        flexDirection: 'row',
-        paddingHorizontal: 10,
-        height: 50,
-    },
-    pawtionActiveInput: {
-        // textWeight: '500',
-        backgroundColor: '#28519077'
-    },
-    white: {
-        color: '#FFF',
-
-    }
-})
 
 export default class PortionCalculator extends React.Component {
     constructor(props) {
         super(props);
+        const window = Dimensions.get("window");
 
         this.state = {
             bag: 0.0,
@@ -49,7 +20,8 @@ export default class PortionCalculator extends React.Component {
                 portionSize: "0",
             },
             isEditing: "bag",
-            showModal: false
+            showModal: false,
+            orienation: window.height > window.width ? 'portrait' : 'landscape'
         };
         this.calculatePortionCost = this._calculatePortionCost.bind(this);
         this.canCalculatePortionCost = this._canCalculatePortionCost.bind(this);
@@ -64,7 +36,16 @@ export default class PortionCalculator extends React.Component {
             clear: "<",
             zeros: "00"
         }
+
+
+        Dimensions.addEventListener('change', () => {
+            const window = Dimensions.get("window");
+            this.setState({
+                orienation: window.height > window.width ? 'portrait' : 'landscape'
+            })
+        })
     }
+
 
     _calculatePortionCost() {
         if (this.canCalculatePortionCost()) {
@@ -111,9 +92,9 @@ export default class PortionCalculator extends React.Component {
     }
 
     setCurrentEditingValue(val) {
-        
+
         let newFloatValue = parseFloat(val) / 100;
-        if(isNaN(newFloatValue)){newFloatValue = 0.00;}
+        if (isNaN(newFloatValue)) { newFloatValue = 0.00; }
         const isEditing = this.state.isEditing;
         switch (isEditing) {
             case "bag":
@@ -150,15 +131,14 @@ export default class PortionCalculator extends React.Component {
     }
 
     render() {
-        const modalVisible = this.state.showModal;
-        const isEditing = this.state.isEditing;
+        const { modalVisible, isEditing, bag, price, portionSize } = this.state;
         const screenHeight = Dimensions.get("window").height - 50;
-        const buttonWidth = Dimensions.get("window").width / 3;
+        const screenWidth = Dimensions.get("window").width;
         const headerHeight = 50;
         const resultHeight = 80;
         const inputsHeight = 3 * 50;
-        const calculatorHeight = screenHeight - resultHeight - inputsHeight- headerHeight;
-        const buttonHeight = calculatorHeight / 4;
+        const calculatorHeight = screenHeight - resultHeight - inputsHeight - headerHeight;
+
         return (
             <View style={{ height: '100%', fontSize: 20 }} >
                 <Modal
@@ -184,61 +164,16 @@ export default class PortionCalculator extends React.Component {
                         disabled={!this.canCalculatePortionCost()}
                         title="Remember Me" />
                 </View>
-                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <View style={[styles.pawtionInputRows, isEditing === "bag" && styles.pawtionActiveInput]}
-                        onTouchEnd={() => this.onChangeEditing("bag")}>
-                        <Text style={[styles.pawtionInputs, styles.left]}>Bag Weight</Text>
-                        <Text style={[styles.pawtionInputs, styles.pawtionUnits]}>kg</Text>
-                        <Text
-                            style={[styles.pawtionInputs, styles.right]}
-                            placeholder="00.0">
-                            {this.state.bag.toFixed(2)}
-                        </Text>
-                    </View>
-                    <View style={[styles.pawtionInputRows, this.state.isEditing === "price" && styles.pawtionActiveInput]}
-                        onTouchEnd={() => this.onChangeEditing("price")}>
-                        <Text style={[styles.pawtionInputs, styles.left]}>Bag Price</Text>
-                        <Text style={[styles.pawtionInputs, styles.pawtionUnits]}>R</Text>
-                        <Text
-                            style={[styles.pawtionInputs, styles.right]}
-                            placeholder="00.0">
-                            {this.state.price.toFixed(2)}
-                        </Text>
-                    </View>
-                    <View style={[styles.pawtionInputRows, this.state.isEditing === "portion" && styles.pawtionActiveInput]}
-                        onTouchEnd={() => this.onChangeEditing("portion")}>
-                        <Text style={[styles.pawtionInputs, styles.left]}>Portion Size</Text>
-                        <Text style={[styles.pawtionInputs, styles.pawtionUnits]}>g</Text>
-                        <Text
-                            style={[styles.pawtionInputs, styles.right]}
-                            placeholder="00.0">
-                            {this.state.portionSize.toFixed(2)}
-                        </Text>
-                    </View>
-                </View>
-                <View style={{ height: calculatorHeight }}>
-                    <View style={{ height: buttonHeight, flexDirection: 'row', alignItems: 'center' }}>
-                        <CalculatorButton Number={1} onPressed={this.calculatorButtonPressed} dark width={buttonWidth} />
-                        <CalculatorButton Number={2} onPressed={this.calculatorButtonPressed} width={buttonWidth} />
-                        <CalculatorButton Number={3} onPressed={this.calculatorButtonPressed} dark width={buttonWidth} />
-                    </View>
-                    <View style={{ height: buttonHeight, flexDirection: 'row', alignItems: 'center' }}>
-
-                        <CalculatorButton Number={4} onPressed={this.calculatorButtonPressed} width={buttonWidth} />
-                        <CalculatorButton Number={5} onPressed={this.calculatorButtonPressed} dark width={buttonWidth} />
-                        <CalculatorButton Number={6} onPressed={this.calculatorButtonPressed} width={buttonWidth} />
-                    </View>
-                    <View style={{ height: buttonHeight, flexDirection: 'row', alignItems: 'center' }}>
-                        <CalculatorButton Number={7} onPressed={this.calculatorButtonPressed} dark width={buttonWidth} />
-                        <CalculatorButton Number={8} onPressed={this.calculatorButtonPressed} width={buttonWidth} />
-                        <CalculatorButton Number={9} onPressed={this.calculatorButtonPressed} dark width={buttonWidth} />
-                    </View>
-                    <View style={{ height: buttonHeight, flexDirection: 'row', alignItems: 'center' }}>
-                        <CalculatorButton Number={'00'} onPressed={this.calculatorButtonPressed} width={buttonWidth} />
-                        <CalculatorButton Number={0} onPressed={this.calculatorButtonPressed} dark width={buttonWidth} />
-                        <CalculatorButton Number={'<'} onPressed={this.calculatorButtonPressed} width={buttonWidth} />
-                    </View>
-                </View>
+                <PawtionInputs
+                    isEditing={isEditing}
+                    bag={bag}
+                    price={price}
+                    portionSize={portionSize}
+                    onChangeEditing={this.onChangeEditing}
+                />
+                <NumPad calculatorHeight={calculatorHeight}
+                    calculatorWidth={screenWidth}
+                    calculatorButtonPressed={this.calculatorButtonPressed} />
             </View>
         );
     }
